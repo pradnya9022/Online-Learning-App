@@ -222,13 +222,25 @@ app.post('/Course' , async(req , res)=>{
     }
 })
 
-app.put('/crs', async(req ,res)=>{
-    // const {_id}=req.params;
-    const {video , coursename , author} = req.body; 
-    const coursedb = await Course.updateOne({_id:_id } , {$set: {video : video , coursename : coursename , author : author }})
+app.put('/AdminEdit/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {coursename , author} = req.body; 
+    const coursedb = await Course.updateOne({_id:_id } , {$set: { coursename : coursename , author : author }})
     res.json({
         data : coursedb,
         msg : `Notes are fetched successfully by title ${coursename}`
+    })
+})
+
+app.delete('/AdminDtl/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const note = await Course.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : note,
+        msg : `Notes are deleted successfully by id ${_id}`
     })
 })
 
