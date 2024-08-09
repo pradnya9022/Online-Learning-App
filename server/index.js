@@ -4,6 +4,8 @@ import cors from 'cors'
 import HomeSchema from './Model/Home.js';
 import Signup from './Model/Sign.js';
 import Course from './Model/Admin.js';
+import HomeCard from './Model/HomeCard.js';
+import md5 from 'md5';
 
 const app = express();
 app.use(express.json());
@@ -110,7 +112,7 @@ app.post('/signup' , async(req , res)=>{
         "address":address,
       "username":username,
       "Email":Email,
-      "password":password
+      "password":md5 (password)
     })
 
     res.json({
@@ -175,7 +177,7 @@ app.post('/login' , async(req , res)=>{
     
     const logindata = await Signup.findOne({
         Email:Email ,
-        password:password
+        password: md5(password)
     })
     if(logindata){
       
@@ -265,6 +267,88 @@ app.get('/Courses' , async(req, res)=>{
 app.get('/coursedata' , async(req, res)=>{
     try{
         const info = await Course.find( )
+        res.json({
+            Success : true,
+            data : info,
+            msg : `data is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+//HomeCard
+app.post('/HomeCard' , async(req , res)=>{
+
+    try{
+        const {img , title , para , rs}=req.body;
+        // const {id}=req.params
+
+        const Coursedata = await HomeCard.create({
+                // id : id,
+                img : img,
+                "title" : title,
+                "para" : para,
+                "rs" : rs
+        })
+
+        res.json({
+            Success :true,
+            Say : Coursedata,
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.put('/HomeCard/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {img ,title , para , rs} = req.body; 
+    const coursedb = await HomeCard.updateOne({_id:_id } , {$set: {img : img , title : title , para : para , rs : rs}})
+    res.json({
+        data : coursedb,
+        msg : `Notes are fetched successfully by title ${coursename}`
+    })
+})
+
+app.delete('/HomeCard/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const note = await HomeCard.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : note,
+        msg : `Notes are deleted successfully by id ${_id}`
+    })
+})
+
+app.get('/HomeCard' , async(req, res)=>{
+    try{
+        // const {coursename}=req.body;
+        const courseinfo = await HomeCard.find()
+        res.json({
+            Success : true,
+            data : courseinfo,
+            msg : `${coursename} is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.get('/HomeCards' , async(req, res)=>{
+    try{
+        const info = await HomeCard.find( )
         res.json({
             Success : true,
             data : info,
