@@ -1,29 +1,29 @@
 import { Schema , model } from "mongoose";
 
-const Card = new Schema(
+const Card3 = new Schema(
     {
 
-        img : {
+        img3 : {
             type : "String",
             require : true
         },
 
-        title : {
+        title3 : {
             type : "String",
             require : true
         },
 
-        para : {
+        para3 : {
             type : "String",
             require : true
         },
 
-        rs : {
+        rs3 : {
             type : "String",
             require : true
         }
     }
 )
 
-const HomeCard = model("HomeCard" , Card)
-export default HomeCard;
+const HomeCard3 = model("HomeCard3" , Card3)
+export default HomeCard3;

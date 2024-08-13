@@ -7,6 +7,10 @@ import Course from './Model/Admin.js';
 import HomeCard from './Model/HomeCard.js';
 import md5 from 'md5';
 import ReactSchema from './Model/React.js'
+import HomeCard2 from './Model/HomeCard2.js';
+import ReactSchema2 from './Model/React2.js';
+import HomeCard3 from './Model/HomeCard3.js';
+import ReactSchema3 from './Model/React3.js';
 
 const app = express();
 app.use(express.json());
@@ -285,7 +289,7 @@ app.get('/coursedata' , async(req, res)=>{
 app.post('/HomeCard' , async(req , res)=>{
 
     try{
-        const {img , title , para , rs}=req.body;
+        const {img , title , para , rs , img2 , title2 , para2 , rs2}=req.body;
         // const {id}=req.params
 
         const Coursedata = await HomeCard.create({
@@ -293,7 +297,11 @@ app.post('/HomeCard' , async(req , res)=>{
                 "img" : img,
                 "title" : title,
                 "para" : para,
-                "rs" : rs
+                "rs" : rs,
+                "img2" : img2,
+                "title2" : title2,
+                "para2" : para2,
+                "rs2" : rs2
         })
 
         res.json({
@@ -310,8 +318,8 @@ app.post('/HomeCard' , async(req , res)=>{
 
 app.put('/HomeCardEdt/:_id', async(req ,res)=>{
     const {_id}=req.params;
-    const {img ,title , para , rs} = req.body; 
-    const coursedb = await HomeCard.updateOne({_id:_id } , {$set: {img : img , title : title , para : para , rs : rs}})
+    const {img ,title , para , rs , img2 , title2 , para2 , rs2} = req.body; 
+    const coursedb = await HomeCard.updateOne({_id:_id } , {$set: {img : img , title : title , para : para , rs : rs ,img2 : img2 , title2 : title2 , para2 : para2 , rs2 : rs2}})
     res.json({
         data : coursedb,
         msg : `Data are fetched successfully by title ${title}`
@@ -366,13 +374,15 @@ app.get('/HomeCards' , async(req, res)=>{
 //ReactSchema
 app.post('/React' , async(req , res)=>{
     try{
-        const {video , head }=req.body;
+        const {video , head ,video2 , head2}=req.body;
         // const {id}=req.params
 
         const Reactdata = await ReactSchema.create({
                 // id : id,
                 "video" : video,
-                "head" : head    
+                "head" : head ,
+                "video2" : video2,
+                "head2" : head2     
         })
 
         res.json({
@@ -389,8 +399,8 @@ app.post('/React' , async(req , res)=>{
 
 app.put('/React/:_id', async(req ,res)=>{
     const {_id}=req.params;
-    const {video ,head } = req.body; 
-    const Reactdb = await ReactSchema.updateOne({_id:_id } , {$set: {video : video , head : head }})
+    const {video ,head ,video2 , head2 } = req.body; 
+    const Reactdb = await ReactSchema.updateOne({_id:_id } , {$set: {video : video , head2 : head2 , video2 , head2}})
     res.json({
         data : Reactdb,
         msg : `Notes are fetched successfully by title ${head}`
@@ -430,6 +440,332 @@ app.get('/getreactdata' , async(req, res)=>{
 app.get('/Reacts' , async(req, res)=>{
     try{
         const infoRe = await ReactSchema.find( )
+        res.json({
+            Success : true,
+            data : infoRe,
+            msg : `data is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+//HomeCard2
+app.post('/HomeCard2' , async(req , res)=>{
+
+    try{
+        const {img2 , title2 , para2 , rs2}=req.body;
+        // const {id}=req.params
+
+        const Coursedata = await HomeCard2.create({
+                // id : id,
+                "img2" : img2,
+                "title2" : title2,
+                "para2" : para2,
+                "rs2" : rs2
+        })
+
+        res.json({
+            Success :true,
+            Say : Coursedata,
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.put('/HomeCardEdt2/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {img2 , title2 , para2 , rs2} = req.body; 
+    const coursedb = await HomeCard2.updateOne({_id:_id } , {$set: {img2 : img2 , title2 : title2 , para2 : para2 , rs2 : rs2}})
+    res.json({
+        data : coursedb,
+        msg : `Data are fetched successfully by title ${title2}`
+    })
+})
+
+app.delete('/HomeCardDlt2/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const note = await HomeCard2.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : note,
+        msg : `Notes are deleted successfully by id ${_id}`
+    })
+})
+
+app.get('/HomeCard2' , async(req, res)=>{
+    try{
+        // const {coursename}=req.body;
+        const courseinfo = await HomeCard2.find()
+        res.json({
+            Success : true,
+            data : courseinfo,
+            msg : `${coursename} is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.get('/HomeCards2' , async(req, res)=>{
+    try{
+        const info = await HomeCard2.find( )
+        res.json({
+            Success : true,
+            data : info,
+            msg : `data is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+//ReactSchema2
+app.post('/React2' , async(req , res)=>{
+    try{
+        const {video2 , head2}=req.body;
+        // const {id}=req.params
+
+        const Reactdata = await ReactSchema2.create({
+                // id : id,
+                "video2" : video2,
+                "head2" : head2     
+        })
+
+        res.json({
+            Success :true,
+            Say : Reactdata,
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.put('/React2/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {video2 , head2 } = req.body; 
+    const Reactdb = await ReactSchema2.updateOne({_id:_id } , {$set: {video2 : video2, head2 : head2 }})
+    res.json({
+        data : Reactdb,
+        msg : `Notes are fetched successfully by title ${head2}`
+    })
+})
+
+app.delete('/ReactDlt2/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const Reactin = await ReactSchema2.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : Reactin,
+        msg : `Notes are deleted successfully by id ${_id}`
+    })
+})
+
+app.get('/getreactdata2' , async(req, res)=>{
+    try{
+        // const {coursename}=req.body;
+        const Reactinfo = await ReactSchema2.find()
+        res.json({
+            Success : true,
+            data : Reactinfo,
+            msg : `${Reactinfo} is show successfully`
+        })
+    
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.get('/Reacts2' , async(req, res)=>{
+    try{
+        const infoRe = await ReactSchema2.find( )
+        res.json({
+            Success : true,
+            data : infoRe,
+            msg : `data is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+
+
+//HomeCard3
+app.post('/HomeCard3' , async(req , res)=>{
+
+    try{
+        const {img3 , title3 , para3 , rs3}=req.body;
+        // const {id}=req.params
+
+        const Coursedata = await HomeCard3.create({
+                // id : id,
+                "img3" : img3,
+                "title3" : title3,
+                "para3" : para3,
+                "rs3" : rs3
+        })
+
+        res.json({
+            Success :true,
+            Say : Coursedata,
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.put('/HomeCardEdt3/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {img3 , title3 , para3 , rs3} = req.body; 
+    const coursedb = await HomeCard3.updateOne({_id:_id } , {$set: {img3 : img3 , title3 : title3 , para3 : para3 , rs3 : rs3 }})
+    res.json({
+        data : coursedb,
+        msg : `Data are fetched successfully by title ${title3}`
+    })
+})
+
+app.delete('/HomeCardDlt3/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const note = await HomeCard3.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : note,
+        msg : `Notes are deleted successfully by id ${_id}`
+    })
+})
+
+app.get('/HomeCard3' , async(req, res)=>{
+    try{
+        // const {coursename}=req.body;
+        const courseinfo = await HomeCard3.find()
+        res.json({
+            Success : true,
+            data : courseinfo,
+            msg : `${coursename} is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.get('/HomeCards3' , async(req, res)=>{
+    try{
+        const info = await HomeCard3.find( )
+        res.json({
+            Success : true,
+            data : info,
+            msg : `data is show successfully`
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+//ReactSchema2
+app.post('/React3' , async(req , res)=>{
+    try{
+        const {video3 , head3}=req.body;
+        // const {id}=req.params
+
+        const Reactdata = await ReactSchema3.create({
+                // id : id,
+                "video3" : video3,
+                "head3" : head3    
+        })
+
+        res.json({
+            Success :true,
+            Say : Reactdata,
+        })
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.put('/React3/:_id', async(req ,res)=>{
+    const {_id}=req.params;
+    const {video3 , head3 } = req.body; 
+    const Reactdb = await ReactSchema3.updateOne({_id:_id } , {$set: {video3 : video3, head3 : head3 }})
+    res.json({
+        data : Reactdb,
+        msg : `Notes are fetched successfully by title ${head3}`
+    })
+})
+
+app.delete('/ReactDlt3/:_id', async(req , res)=>{
+    const {_id} = req.params;
+    const Reactin = await ReactSchema3.deleteOne({_id:_id})
+
+    res.json({
+        Success : true,
+        id : _id,
+        data : Reactin,
+        msg : `Notes are deleted successfully by id ${_id}`
+    })
+})
+
+app.get('/getreactdata3' , async(req, res)=>{
+    try{
+        // const {coursename}=req.body;
+        const Reactinfo = await ReactSchema3.find()
+        res.json({
+            Success : true,
+            data : Reactinfo,
+            msg : `${Reactinfo} is show successfully`
+        })
+    
+    }catch(error){
+        res.json({
+            Success : false,
+            msg : error.message
+        })
+    }
+})
+
+app.get('/Reacts2' , async(req, res)=>{
+    try{
+        const infoRe = await ReactSchema2.find( )
         res.json({
             Success : true,
             data : infoRe,
